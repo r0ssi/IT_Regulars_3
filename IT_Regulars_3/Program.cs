@@ -49,7 +49,7 @@ Console.WriteLine(expRegex.IsMatch(dataexp1));// True
 Console.WriteLine(expRegex.IsMatch(dataexp2));// False
 
 Console.WriteLine("\nЗадача 4. Создать регулярное выражение, совпадающее с парой тегов <p> и </p> языка разметки XHTML и текстом между ними. Текст между этими тегами может содержать другие теги XHTML.");
-Regex htmlmarkup = new Regex(@"<article>.*?</article>");
+Regex htmlmarkup = new Regex(@"<article>.*?</article>", RegexOptions.IgnoreCase);
 string htmlmarked1 = "<article> Лабораторная работа </article>";
 string htmlmarked2 = "<article> hypertext mark language <africa>";
 string htmlmarked3 = "<text> text sample </text>";
@@ -58,16 +58,36 @@ Console.WriteLine(htmlmarkup.IsMatch(htmlmarked1));// True
 Console.WriteLine(htmlmarkup.IsMatch(htmlmarked2));// False
 Console.WriteLine(htmlmarkup.IsMatch(htmlmarked3));// False
 
-Console.WriteLine("\nЗадача 5. Создать регулярное выражение, совпадающее с целым файлом HTML, которое будет проверять наличие тегов html, head, title и body и их вложенность. " +
+Console.WriteLine("\nЗадача 5. Создать регулярное выражение, совпадающее с целым файлом HTML, которое будет проверять наличие тегов <p> и </p> и их вложенность. " +
     "Выражение не должно совпадать с файлами HTML, в которых отсутствуют требуемые теги.");
+string HTMLtext = "<p>widebody text</p>"; 
+string SecondHTMLtext = "<head><p>hypertext</p></head>"; 
+string ThirdHTMLtext = "<p>without closing tag<p>"; 
+Regex tagCheck = new Regex(@"<p>.*?</p>", RegexOptions.IgnoreCase);
+Console.WriteLine(tagCheck.IsMatch(HTMLtext)); // True
+Console.WriteLine(tagCheck.IsMatch(SecondHTMLtext)); // True
+Console.WriteLine(tagCheck.IsMatch(ThirdHTMLtext)); // False
 
+Console.WriteLine("\nЗадача 6. Отыскать любое слово, расположенное между парой тегов <p> и </p> HTML, " +
+    "без включения этих тегов в общее соответствие регулярному выражению. Например, для испытуемого текста Моя <p>лекция</p> " +
+    "очень скучна правильным соответствием будет лекция.");
+string checkA = "Сок <p>из</p> спелых фруктов.";
+string checkB = "Не <p>люблю<p> газировку.";
+string checkC = "Я <p>пью воду";
+Regex checkWord = new Regex(@"(?<=<p>)\w+(?=</p>)");
+Console.WriteLine(checkWord.IsMatch(checkA)); // True
+Console.WriteLine(checkWord.IsMatch(checkB)); // False
+Console.WriteLine(checkWord.IsMatch(checkC)); // False
 
-Console.WriteLine("\nЗадача 6. Отыскать любое слово, расположенное между парой тегов <b> и </b> HTML, " +
-    "без включения этих тегов в общее соответствие регулярному выражению. Например, для испытуемого текста Моя <b>лекция</b> очень скучна правильным соответствием будет лекция.");
-
-
-Console.WriteLine("\nЗадача 7. Создать регулярное выражение, совпадающее со списком слов удовлетворительно, хорошо и отлично, разделенных запятыми. Каждое слово может присутствовать в списке не менее одного раза.");
-
+Console.WriteLine("\nЗадача 7. Создать регулярное выражение, совпадающее со списком слов дыня, арбуз, малина, клубника, разделенных запятыми. " +
+    "Каждое слово может присутствовать в списке не менее одного раза.");
+Regex wordList = new Regex(@"\b(?:(?:(дыня)|(арбуз)|(малина)|(клубника))(?:,|\b)){4,}(?(1)|(?!) )(?(2)|(?!))(?(3)|(?!))(?(4)|(?!))", RegexOptions.IgnoreCase);
+string wordsFull = "Летом любимые фрукты и ягоды это: дыня, арбуз, малина и клубника.";
+string wordsRepeat = "Дыня, дыня, арбуз, малина, клубника";
+string wordsMinusOne = "Дыня, арбуз, малина";
+Console.WriteLine(wordList.IsMatch(wordsFull)); // True
+Console.WriteLine(wordList.IsMatch(wordsRepeat)); // True
+Console.WriteLine(wordList.IsMatch(wordsMinusOne)); // False
 
 Console.WriteLine("\nЗадача 8. Выполнить поиск с заменой, в процессе которого все адреса URL будут преобразованы в ссылки HTML, указывающие на эти адреса, и использовать обнаруженные адреса URL как замещающий текст. " +
     "Примем, что адреса URL начинаются с последовательности «http:», за которой следуют любые непробельные символы. Например, текст \r\nПожалуйста посетите https://youtu.be/dQw4w9WgXcQ?list=RDdQw4w9WgXcQ\r\n должен превратиться в текст " +
@@ -94,5 +114,6 @@ Console.WriteLine(secondResultReplace = Regex.Replace(ForthNum, secondPattern, s
 
 Console.WriteLine("\nЗадача 10. Создать замещающий текст, который заместит совпадение с регулярным выражением текстом, расположенным перед совпадением, всем испытуемым текстом и остатком испытуемого текста, расположенным после совпадения. " +
     "Например, если в тексте БаянУпражнениеШампур был найден фрагмент Упражнение, его следует заменить текстом ЛекцияУпражнениеЛабораторная, в результате должен получиться текст БаянЛекцияУпражнениеЛабораторнаяШампур.");
+
 
 Console.ReadKey();
