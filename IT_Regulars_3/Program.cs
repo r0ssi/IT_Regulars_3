@@ -103,8 +103,10 @@ Console.WriteLine(wordList.IsMatch(wordsFull)); // True
 Console.WriteLine(wordList.IsMatch(wordsRepeat)); // True
 Console.WriteLine(wordList.IsMatch(wordsMinusOne)); // False
 
-Console.WriteLine("\nЗадача 8. Выполнить поиск с заменой, в процессе которого все адреса URL будут преобразованы в ссылки HTML, указывающие на эти адреса, и использовать обнаруженные адреса URL как замещающий текст. " +
-    "Примем, что адреса URL начинаются с последовательности «http:», за которой следуют любые непробельные символы. Например, текст \r\nПожалуйста посетите https://youtu.be/dQw4w9WgXcQ?list=RDdQw4w9WgXcQ\r\n должен превратиться в текст " +
+Console.WriteLine("\nЗадача 8. Выполнить поиск с заменой, в процессе которого все адреса URL будут преобразованы в ссылки HTML, указывающие на эти адреса, " +
+    "и использовать обнаруженные адреса URL как замещающий текст. " +
+    "Примем, что адреса URL начинаются с последовательности «http:», за которой следуют любые непробельные символы. " +
+    "Например, текст \r\nПожалуйста посетите https://youtu.be/dQw4w9WgXcQ?list=RDdQw4w9WgXcQ\r\n должен превратиться в текст " +
     "\r\nПожалуйста посетите <video src=\"https://youtu.be/dQw4w9WgXcQ?list=RDdQw4w9WgXcQ\" controls width=\"640\" height=\"360\">https://youtu.be/dQw4w9WgXcQ?list=RDdQw4w9WgXcQ</a>\r\n");
 
 string text = "Пожалуйста посетите https://youtu.be/dQw4w9WgXcQ?list=RDdQw4w9WgXcQ";
@@ -115,7 +117,8 @@ string htmlResult = Regex.Replace(text, urlPattern, urlReplace);
 Console.WriteLine(htmlResult);
 
 
-Console.WriteLine("\nЗадача 9. Найти совпадение с любой непрерывной последовательностью из 11 цифр, например 12345678901. Преобразовать эту последовательность в формат представления телефонных номеров, например (12345) 67-89-01.");
+Console.WriteLine("\nЗадача 9. Найти совпадение с любой непрерывной последовательностью из 11 цифр, например 12345678901. " +
+    "Преобразовать эту последовательность в формат представления телефонных номеров, например (12345) 67-89-01.");
 Console.WriteLine("Решение 1:");
 
 string pattern = @"\b(?<area>\d{5})(?<exchange>\d{2})(?<number>\d{2})(?<number2>\d{2})\b";
@@ -148,11 +151,12 @@ Console.WriteLine("\nЗадача 10. Создать замещающий тек
 string sourceText = "БаянУпражнениеШампур";
 string taskPattern = "Упражнение";
 
-// Буквально: заменяем "Упражнение" на: Лекция + само совпадение ($&) + Лабораторная
 string taskReplace = "Лекция$&Лабораторная";
 
 string finalResult = Regex.Replace(sourceText, taskPattern, taskReplace);
-Console.WriteLine(finalResult); // Выведет: БаянЛекцияУпражнениеЛабораторнаяШампур
+Console.WriteLine("\n"+finalResult); // Выведет: БаянЛекцияУпражнениеЛабораторнаяШампур
+string secondFinalResult = Regex.Replace("ГиряУпражнениеНожУпражнениеСлон", taskPattern, taskReplace);
+Console.WriteLine($"\n{secondFinalResult}");
 
 
 
